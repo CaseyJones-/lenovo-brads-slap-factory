@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'EightBitRegular';
+    src: url('EightBit.eot');
+    src: url('EightBit.eot') format('embedded-opentype'),
+         url('EightBit.woff2') format('woff2'),
+         url('EightBit.woff') format('woff'),
+         url('EightBit.ttf') format('truetype'),
+         url('EightBit.svg#EightBitRegular') format('svg');
+}
+
+html {
+
+	font-family: 'EightBitRegular';
+	font-size: 14px;
+}
+
+
+.header	{
+
+	background-color: #ccc;
+}

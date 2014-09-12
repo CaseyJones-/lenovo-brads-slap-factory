@@ -1,0 +1,498 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"background",
+				"background-color"
+			],
+			[
+				"nodesize",
+				"nodeSize"
+			],
+			[
+				"gutter",
+				"gutterSize"
+			],
+			[
+				"font-",
+				"font-weight"
+			],
+			[
+				"right",
+				"to-right"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"border-s",
+				"border-right-style"
+			],
+			[
+				"in",
+				"inline-block"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"Fos",
+				"fosphr-glyphs"
+			],
+			[
+				"C",
+				"Cycle"
+			],
+			[
+				"News",
+				"news-cycle"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 1344,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "css/main.css",
+			"settings":
+			{
+				"buffer_size": 443,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/GameView.js",
+			"settings":
+			{
+				"buffer_size": 2204,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/bootstrap.js",
+			"settings":
+			{
+				"buffer_size": 249,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Nodejs/Nodejs.sublime-build",
+	"command_palette":
+	{
+		"height": 306.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Upgrade/Overwrite All Packages"
+			]
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/casey/src/node/fosphr-famous/views/main/viewjs/MainView.ejs",
+		"/home/casey/src/node/fosphr-famous/views/main/viewjs/bootstrap.ejs",
+		"/home/casey/src/node/fosphr-famous/views/main/index.ejs",
+		"/home/casey/src/static-www/lenovo/lenovo.sublime-project",
+		"/home/casey/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/casey/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/casey/src/node/fosphr-famous/views/main/viewjs/TileViewTest.ejs",
+		"/home/casey/src/node/fosphr-famous/views/main/viewjs/ModdedScrollview.ejs",
+		"/home/casey/src/node/fosphr-famous/views/main/viewjs/PageView.ejs",
+		"/home/casey/src/node/fosphr-famous/docs/Render Tree.odg",
+		"/home/casey/src/node/fosphr-famous/api/controllers/ViewjsController.js",
+		"/home/casey/src/node/fosphr-famous/assets/fonts/fosphr-glyphs.woff",
+		"/home/casey/src/node/fosphr-famous/assets/fonts/news-cycle.woff",
+		"/home/casey/src/node/fosphr-famous/assets/styles/app.css",
+		"/home/casey/src/node/fosphr-famous/config/routes.js",
+		"/home/casey/src/node/fosphr-famous/views/home/index.ejs",
+		"/home/casey/src/node/fosphr-famous/assets/js/main.js",
+		"/home/casey/src/node/fosphr-famous/views/main\nmain/viewjs/main.ejs",
+		"/home/casey/src/node/fosphrVoteTest/api/controllers/VoteController.js",
+		"/home/casey/src/node/fosphrVoteTest/api/controllers/PollController.js",
+		"/home/casey/.config/sublime-text-3/Packages/Package Control/Package Control.sublime-settings",
+		"/home/casey/.config/sublime-text-3/Packages/Git/Git.sublime-settings",
+		"/home/casey/.config/sublime-text-3/Packages/Nodejs/Nodejs.sublime-settings",
+		"/home/casey/src/node/fosphr-famous/config/views.js",
+		"/home/casey/src/node/fosphr/views/main/index.ejs",
+		"/home/casey/src/node/fosphr/views/main/partials/login-register.ejs",
+		"/home/casey/src/node/fosphr/assets/linker/styles/fosphr.css",
+		"/home/casey/src/node/fosphr/views/main/partials/new-poll.ejs",
+		"/home/casey/src/node/fosphr/assets/linker/styles/jquery.mobile.structure-1.4.0-rc.1.css",
+		"/home/casey/src/node/fosphr/views/home/index.ejs",
+		"/home/casey/.config/sublime-text-3/Packages/User/Distraction Free.sublime-settings",
+		"/home/casey/src/node/fosphr/config/routes.js",
+		"/home/casey/src/node/fosphr/assets/linker/styles/jquery.mobile.icons.min.css",
+		"/home/casey/src/node/fosphr/config/404.js",
+		"/home/casey/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/casey/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/casey/src/node/fosphr/.project",
+		"/home/casey/.config/sublime-text-3/Packages/User/Package Control.sublime-settings",
+		"/home/casey/%F"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"MainView",
+			"_size",
+			"getSize",
+			"Tile",
+			"RenderNode",
+			"transform",
+			"RenderNode",
+			"RenderNode\n",
+			"stateModifier\n",
+			"statemo",
+			"height",
+			"testModif",
+			"frontRenderNode",
+			"this._objectSequence",
+			"this.objectSequence",
+			"this.modifiers",
+			"this.tileHeightSum",
+			"console",
+			"this.bottomMargin",
+			"this.topMargin",
+			"this.tileYSpacing",
+			"this.tileMaxXSpacing",
+			"this.tileMinXSpacing",
+			"this.minGutterSize",
+			"this.tileWidth",
+			"500",
+			"famous",
+			"this.scrollDistance",
+			"margin",
+			"polltiles",
+			"topMa",
+			");",
+			"();\n",
+			"nodeSize",
+			"WallView",
+			"_resolveEvents",
+			"WallView",
+			"PageView",
+			"300",
+			"MenuView",
+			"MainView",
+			"text-shadow",
+			"ui-btn",
+			"data-overlay",
+			".ui-title",
+			"ellipsis",
+			"invalid",
+			".ui-icon-carat",
+			".ui-corner-all",
+			"login-register",
+			"hover",
+			"}\n",
+			"color:",
+			"ui-btn",
+			"hover",
+			".ui-input-text input,",
+			".ui-input-text input, .ui-input-sea",
+			".ui-input-text input,text",
+			";\n",
+			"search",
+			"tab",
+			"></",
+			"s",
+			"ul",
+			"div",
+			"tab"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"GameView",
+			"Poll",
+			"ContainerSurface",
+			"View",
+			"this._nodeSequence",
+			"this._objectSequence",
+			"this._modifiers",
+			"this._tileHeightSum",
+			"this.options.bottomMargin",
+			"this.options.topMargin",
+			"this.options.tileMaxXSpacing",
+			"this.options.tileMinXSpacing",
+			"this.options.minGutterSize",
+			"this.options.tileWidth",
+			"this.tileHeightSum",
+			"TileView",
+			"_setupEventListeners",
+			"PollTile",
+			"WallView",
+			"PageView",
+			"MenuView",
+			"li",
+			"ul"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1344,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "css/main.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 443,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "js/GameView.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2204,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "js/bootstrap.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 249,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								249,
+								249
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 112.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 112.0
+	},
+	"project": "lenovo.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

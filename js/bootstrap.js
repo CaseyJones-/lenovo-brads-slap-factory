@@ -6,4 +6,5 @@ define(function(require, exports, module) {
     var gameView = new GameView();
 
     mainContext.add(gameView);
+
 });

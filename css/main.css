@@ -1,21 +1,93 @@
 @font-face {
     font-family: 'EightBitRegular';
-    src: url('EightBit.eot');
-    src: url('EightBit.eot') format('embedded-opentype'),
-         url('EightBit.woff2') format('woff2'),
-         url('EightBit.woff') format('woff'),
-         url('EightBit.ttf') format('truetype'),
-         url('EightBit.svg#EightBitRegular') format('svg');
+    src: url('../fonts/EightBit.eot');
+    src: url('../fonts/EightBit.eot') format('embedded-opentype'),
+         url('../fonts/EightBit.woff2') format('woff2'),
+         url('../fonts/EightBit.woff') format('woff'),
+         url('../fonts/EightBit.ttf') format('truetype'),
+         url('../fonts/EightBit.svg#EightBitRegular') format('svg');
 }
 
 html {
-
 	font-family: 'EightBitRegular';
-	font-size: 14px;
+}
+
+body {
+    font-size: 14px;
+
+    font-smooth: never !important;
+    -webkit-font-smoothing : none !important;
+    image-rendering: optimizeSpeed !important;             // Older versions of FF
+    image-rendering: -moz-crisp-edges !important;          // FF 6.0+
+    image-rendering: -webkit-optimize-contrast !important; // Safari
+    image-rendering: -o-crisp-edges !important;            // OS X & Windows Opera (12.02+)
+    image-rendering: pixelated !important;                 // Awesome future-browsers
+    -ms-interpolation-mode: nearest-neighbor !important;   // IE
 }
 
 
 .header	{
-
-	background-color: #ccc;
+    font-size: 32px;
+    font-height: 30px;
+    color: #fff;
+    background-color: #2222aa;
 }
+
+.title {
+
+}
+
+.wall {
+    background-color: #aa0000;
+}
+
+.floor {
+    background: #636363; /* Old browsers */
+    background: -moz-linear-gradient(top,  #636363 0%, #cecece 66%, #dbdbdb 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#636363), color-stop(66%,#cecece), color-stop(100%,#dbdbdb)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #636363 0%,#cecece 66%,#dbdbdb 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #636363 0%,#cecece 66%,#dbdbdb 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #636363 0%,#cecece 66%,#dbdbdb 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #636363 0%,#cecece 66%,#dbdbdb 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#636363', endColorstr='#dbdbdb',GradientType=0 ); /* IE6-9 */
+}
+
+.conveyor {
+    background-image: url('../images/conveyor_belt.png');
+}
+
+
+/* Smashables */
+.smashables {
+    z-index: 1;
+}
+
+.smashable-orange-lenovo {
+    background-image: url('../images/orange-lenovo-tablet.png');
+}
+
+.smashable-silver-lenovo {
+    background-image: url('../images/silver-lenovo-tablet.png');
+}
+
+.smashable-fruit-pc {
+    background-color: #3333dd;
+}
+
+.smashable-old-pc {
+    background-color: #000;
+}
+
+.smashable-matt-forte {
+    background-color: #213532;
+}
+
+.smashable-andrew-luck {
+    background-color: #a84762;
+}
+
+.smashable-watermelon {
+    background-color: #22ff22;
+}
+
+

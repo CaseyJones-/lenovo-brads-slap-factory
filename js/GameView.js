@@ -36,7 +36,7 @@ define(function(require, exports, module) {
         _createGameWorld.call(this);
         _addSmashables.call(this);
 
-        this.gameEngine.runConveyor();
+        this.gameEngine.startGame();
     }
 
     //Extend the View prototype and assign our constructor
@@ -82,8 +82,6 @@ define(function(require, exports, module) {
           origin: [0.96, 0.4]
         });
 
-        
-
         this.header.add(this.header.bar);
         this.header.add(this.header.gameTitleModifier).add(this.header.gameTitle);
         this.header.add(this.header.scoreModifier).add(this.header.score);
@@ -125,12 +123,6 @@ define(function(require, exports, module) {
         for(var key in this.gameObjects.smashables.types) {
 
             for(var j = 0; j < this.gameObjects.smashables.types[key].initialPoolSize; j++) {
-
-                //Initialize the StateModifiers
-                this.gameObjects.smashables.types[key].modifierPool[j] = new StateModifier({
-                  origin: [1, 0],
-                  transform: Transform.translate(this.gameObjects.smashables.types[key].size[0], 340, 0)
-                });
 
                 this.content.add(this.gameObjects.smashables.types[key].modifierPool[j])
                             .add(this.gameObjects.smashables.types[key].surfacePool[j]);

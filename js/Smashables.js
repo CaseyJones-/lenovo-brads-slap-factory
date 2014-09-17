@@ -21,6 +21,7 @@ define(function(require, exports, module) {
                 size: [80, 87],
                 smashable: false,
                 initialPoolSize: 5,
+                placementOdds: .2,
                 classes: ["smashables", "smashable-orange-lenovo"]
             },
 
@@ -28,6 +29,7 @@ define(function(require, exports, module) {
                 size: [80, 87],
                 smashable: false,
                 initialPoolSize: 5,
+                placementOdds: .2,
                 classes: ["smashables", "smashable-silver-lenovo"]
             },
 
@@ -35,6 +37,7 @@ define(function(require, exports, module) {
                 size: [110, 85],
                 smashable: true,
                 initialPoolSize: 5,
+                placementOdds: .28,
                 classes: ["smashables", "smashable-fruit-pc"]
             },
 
@@ -42,6 +45,7 @@ define(function(require, exports, module) {
                 size: [110, 85],
                 smashable: true,
                 initialPoolSize: 5,
+                placementOdds: .28,
                 classes: ["smashables", "smashable-old-pc"]
             },
 
@@ -49,6 +53,7 @@ define(function(require, exports, module) {
                 size: [400, 80],
                 smashable: true,
                 initialPoolSize: 2,
+                placementOdds: .02,
                 classes: ["smashables", "smashable-matt-forte"]
             },
 
@@ -56,16 +61,9 @@ define(function(require, exports, module) {
                 size: [380, 80],
                 smashable: true,
                 initialPoolSize: 2,
+                placementOdds: .02,
                 classes: ["smashables", "smashable-andrew-luck"]
-            },
-
-            watermelon: {
-                size: [80, 85],
-                smashable: true,
-                initialPoolSize: 10,
-                classes: ["smashables", "smashable-watermelon"]
             }
-
         }
 
         //Initialize the surfacePool for each type and add them to
@@ -90,7 +88,7 @@ define(function(require, exports, module) {
                   transform: Transform.translate(this.types[key].size[0], 340, 0)
                 });
 
-                this.types[key].surfacesAvailable[j] = j;
+                this.types[key].surfacesAvailable.push(j);
             }
         }
     }
@@ -108,6 +106,49 @@ define(function(require, exports, module) {
 
 
     /*--- PUBLIC METHODS ---*/
+
+    Smashables.prototype.calcDurations = function(conveyorDistance, conveyorSpeed) {
+
+        for(var key in this.types) {
+
+            var duration = conveyorDistance / conveyorSpeed;
+                duration = ((this.types[key].size[0] - 1) / duration);
+                duration = Math.round(conveyorSpeed + duration);
+
+            this.types[key].duration = duration;
+        }
+    }
+
+    Smashables.prototype.calcMinGapDurations = function(conveyorDistance, conveyorSpeed, minPixelGap) {
+
+        for(var key in this.types) {
+
+            var distanceSpeedRatio = conveyorDistance / conveyorSpeed;
+            
+            var minGapDuration = this.types[key].size[0] / minGapDuration;
+                minGapDuration += minPixelGap / distanceSpeedRatio;
+
+            this.types[key].minGapDuration = minGapDuration;
+        }
+    }
+
+    Smashables.prototype.generateRandToTypeArray = function() {
+
+        this.randToType = new Array();
+        var indexSum = 0;
+
+        for(var key in this.types) {
+
+            var maxIndex = this.types[key].placementOdds * 100;
+
+            for(var i = indexSum; i < (maxIndex + indexSum); i++) {
+
+                this.randToType[i] = key;
+            }
+
+            indexSum += this.types[key].placementOdds * 100;
+        }    
+    }
 
 
     /*--- END PUBLIC METHODS --*/

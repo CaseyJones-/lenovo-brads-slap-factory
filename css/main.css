@@ -54,12 +54,18 @@ body {
 
 .conveyor {
     background-image: url('../images/conveyor_belt.png');
+    z-index: 1;
+}
+
+.brad {
+    background-image: url('../images/brad-blevins-sweatsuit.png');
+    z-index: 0;
 }
 
 
 /* Smashables */
 .smashables {
-    z-index: 1;
+    z-index: 2;
 }
 
 .smashable-orange-lenovo {

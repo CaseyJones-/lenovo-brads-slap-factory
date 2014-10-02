@@ -35,6 +35,7 @@ define(function(require, exports, module) {
         _createHeader.call(this);
         _createGameWorld.call(this);
         _addSmashables.call(this);
+        _addBrad.call(this);
 
         this.gameEngine.startGame();
     }
@@ -128,6 +129,22 @@ define(function(require, exports, module) {
                             .add(this.gameObjects.smashables.types[key].surfacePool[j]);
             }
         }
+    }
+
+    function _addBrad() {
+
+      this.gameObjects.bradModifier = new Modifier({
+        origin: [1, 0],
+        transform : Transform.translate(-550, 150, 0)
+      });
+
+      this.gameObjects.brad = new Surface({
+        size: [101, 400],
+        classes: ["brad"]
+      })
+
+      this.content.add(this.gameObjects.bradModifier).add(this.gameObjects.brad);
+
     }
 
     function _getContentWindowSize() {

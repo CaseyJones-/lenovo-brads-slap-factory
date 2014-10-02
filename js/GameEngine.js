@@ -25,6 +25,7 @@ define(function(require, exports, module) {
     	this.cyclesSinceLast = 0;
     	this.smashablePlacementOdds = 0.25; //The odds of a smashable being placed in an engine cycle
     	this.randomIndices = new Array();
+    	this.lastMinGap = 0;
 
     	//Milliseconds it takes for an object to traverse the conveyor belt
     	this.conveyorSpeed = 2000;
@@ -67,11 +68,20 @@ define(function(require, exports, module) {
     	}
     	else {
 
-    		var smashableType = this.smashables.randToType[smashableRandom];
+    		var durationSinceLast = this.engineLoopFrequency * this.cyclesSinceLast,
+    			smashableType = this.smashables.randToType[smashableRandom];
 
+    		if(durationSinceLast < this.lastMinGap){
+    			return;
+    		}
+
+    		console.log([durationSinceLast, this.smashables.types[smashableType].minGapDuration]);
+
+    		this.lastMinGap = this.smashables.types[smashableType].minGapDuration;
     		this.placementIndexForRandom--;
     		this.smashableIndexForRandom++;
     		this.cyclesSinceLast = 0;
+
 
     		_placeSmashable.call(this, smashableType);
     	}
@@ -119,7 +129,7 @@ define(function(require, exports, module) {
 				{ duration : 1 },
 				function() {
 					this.smashables.types[type].surfacePool[index].setProperties(
-						{ zIndex: '1' }
+						{ zIndex: '2' }
 					);
 
 					this.smashables.types[type].surfacesAvailable.push(index);

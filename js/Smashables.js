@@ -125,8 +125,10 @@ define(function(require, exports, module) {
 
             var distanceSpeedRatio = conveyorDistance / conveyorSpeed;
             
-            var minGapDuration = this.types[key].size[0] / minGapDuration;
+            var minGapDuration = this.types[key].size[0] / distanceSpeedRatio;
                 minGapDuration += minPixelGap / distanceSpeedRatio;
+
+            console.log(minGapDuration);
 
             this.types[key].minGapDuration = minGapDuration;
         }

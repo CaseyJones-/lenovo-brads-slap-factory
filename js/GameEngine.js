@@ -1,5 +1,6 @@
 define(function(require, exports, module) {
 
+	var Engine = require('famous/core/Engine');
 	var Transform = require('famous/core/Transform');
 	var Easing = require('famous/transitions/Easing');
 	var Timer = require('famous/utilities/Timer');
@@ -32,6 +33,14 @@ define(function(require, exports, module) {
 
     	this.placementIndexForRandom = 99;
     	this.smashableIndexForRandom = 0;
+
+    	/* HOOKS */
+
+    	Engine.on('click', function() {
+		  _slap.call(this);
+		}.bind(this));
+
+    	/* END HOOKS */
         
     }
 
@@ -88,7 +97,6 @@ define(function(require, exports, module) {
     }
 
 
-
     function _placeSmashable(type) {
     	
     	if(this.smashables.types[type].surfacesAvailable.length == 0) {
@@ -109,7 +117,7 @@ define(function(require, exports, module) {
 			);
 
 			this.smashables.types[type].modifierPool[index].setTransform(
-				Transform.translate(((130+this.conveyorDistance) * -1), 500, 0),
+				Transform.translate(((130 + this.conveyorDistance) * -1), 500, 0),
 				{ duration : 100, curve: Easing.inOutSine },
 				function() {
 					this.smashables.types[type].surfacePool[index].setProperties(
@@ -138,6 +146,20 @@ define(function(require, exports, module) {
 
     	}
     }
+
+  	function _slap() {
+
+  		this._gameObjects.bradsTabletModifier.setTransform(
+				Transform.translate(-550, 260, 0),
+			 	{ duration : 25 }
+		);
+
+		this._gameObjects.bradsTabletModifier.setTransform(
+				Transform.translate(-550, 215, 0),
+			 	{ duration : 25 }
+		);
+
+  	}
 
     function _generateRandomIndices() {
 

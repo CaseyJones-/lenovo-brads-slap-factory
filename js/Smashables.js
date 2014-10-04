@@ -130,7 +130,7 @@ define(function(require, exports, module) {
 
             console.log(minGapDuration);
 
-            this.types[key].minGapDuration = minGapDuration;
+            this.types[key].minGapDuration = Math.round(minGapDuration);
         }
     }
 

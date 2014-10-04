@@ -62,6 +62,11 @@ body {
     z-index: 0;
 }
 
+.brads-tablet {
+    background-image: url('../images/brads-arms-and-tablet.png');
+    z-index: 3;
+}
+
 
 /* Smashables */
 .smashables {

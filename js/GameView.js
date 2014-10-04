@@ -64,7 +64,7 @@ define(function(require, exports, module) {
         })
 
         this.header.gameTitle = new Surface({
-          content: "Computer Slap",
+          content: "Brad's Slapapalooza",
           size: [true, true],
           classes: ["header"]
         });
@@ -133,9 +133,17 @@ define(function(require, exports, module) {
 
     function _addBrad() {
 
+      var bradsLocation = new Array(-550, 110);
+      var bradsTabletYOffset = 115;
+
+      this.gameObjects.bradsLocation = bradsLocation;
+
+      //How much farther the Tablet is offset on the Y axis from brad
+      this.gameObjects.bradsTabletYOffset = bradsTabletYOffset;
+
       this.gameObjects.bradModifier = new Modifier({
         origin: [1, 0],
-        transform : Transform.translate(-550, 150, 0)
+        transform : Transform.translate(bradsLocation[0], bradsLocation[1], 0)
       });
 
       this.gameObjects.brad = new Surface({
@@ -143,7 +151,18 @@ define(function(require, exports, module) {
         classes: ["brad"]
       })
 
+      this.gameObjects.bradsTabletModifier = new Modifier({
+        origin: [1, 0],
+        transform : Transform.translate(bradsLocation[0], (bradsLocation[1] + bradsTabletYOffset), 0)
+      });
+
+      this.gameObjects.bradsTablet = new Surface({
+        size: [101, 83],
+        classes: ["brads-tablet"]
+      })
+
       this.content.add(this.gameObjects.bradModifier).add(this.gameObjects.brad);
+      this.content.add(this.gameObjects.bradsTabletModifier).add(this.gameObjects.bradsTablet);
 
     }
 

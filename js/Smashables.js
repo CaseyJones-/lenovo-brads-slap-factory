@@ -45,7 +45,7 @@ define(function(require, exports, module) {
                 size: [110, 85],
                 smashable: true,
                 initialPoolSize: 5,
-                placementOdds: .0,
+                placementOdds: .28,
                 classes: ["smashables", "smashable-old-pc"]
             },
 
@@ -53,7 +53,7 @@ define(function(require, exports, module) {
                 size: [400, 80],
                 smashable: true,
                 initialPoolSize: 2,
-                placementOdds: .30,
+                placementOdds: .02,
                 classes: ["smashables", "smashable-matt-forte"]
             },
 

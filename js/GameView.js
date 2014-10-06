@@ -75,6 +75,10 @@ define(function(require, exports, module) {
           classes: ["header"]
         });
 
+        //Grab a reference to the score surface and put it in
+        //gameObjects so it can be changed later.
+        this.gameObjects.score = this.header.score;
+
         this.header.gameTitleModifier = new Modifier({
           origin: [0.5, 0.4]
         });

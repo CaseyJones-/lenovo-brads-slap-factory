@@ -121,7 +121,7 @@ define(function(require, exports, module) {
     		var time = new Date();
     			time = time.getTime();
 
-    		this.smashablesOnConveyor[time.toString()] = {type: type, placed: time};
+    		this.smashablesOnConveyor[time.toString()] = {type: type, placed: time, smashed: false};
 
 	    	//Send the smashable down the conveyor, 
 	    	this.smashables.types[type].modifierPool[index].setTransform(
@@ -194,19 +194,38 @@ define(function(require, exports, module) {
     		var smashableInfo = this.smashablesOnConveyor[key],
     		    timeElasped = time - smashableInfo.placed;
 
-    		var position = this.smashables.getPositionFromElapsed(smashableInfo.type,
-    												   			  timeElasped,
-    												   			  this.conveyorDistance);
-    		
-    		//Test for three cases: 1. Is the trailing edge of the object in the window?
-    		//						2. Is the leading edge of the object in the window?
-    		//						3. Is the window within the object?
-    		//If any are true it's a hit!
-    		if((position[0] >= this.hitWindow[0]) && (position[0] <= this.hitWindow[1]) ||
-    		   (position[1] >= this.hitWindow[0]) && (position[1] <= this.hitWindow[1]) ||
-    		   (this.hitWindow[0] >= position[0]) && (this.hitWindow[1] <= position[1])) {
+    		//If it wasn't already smashed...
+    		if(!smashableInfo.smashed) {
 
-    			console.log(smashableInfo.type);
+	    		var position = this.smashables.getPositionFromElapsed(smashableInfo.type,
+	    												   			  timeElasped,
+	    												   			  this.conveyorDistance);
+	    		
+	    		//Test for three cases: 1. Is the trailing edge of the object in the window?
+	    		//						2. Is the leading edge of the object in the window?
+	    		//						3. Is the window within the object?
+	    		//If any are true it's a hit!
+	    		if((position[0] >= this.hitWindow[0]) && (position[0] <= this.hitWindow[1]) ||
+	    		   (position[1] >= this.hitWindow[0]) && (position[1] <= this.hitWindow[1]) ||
+	    		   (this.hitWindow[0] >= position[0]) && (this.hitWindow[1] <= position[1])) {
+
+	    			//If the hit was on a smashable...
+	    			if(this.smashables.types[smashableInfo.type].smashable) {
+	    				
+	    				//Increment the score
+	    				this.score += 10;
+
+	    				//Change the content of the score object
+	    				this._gameObjects.score.setContent('Score: ' + this.score);
+
+	    				//Set this smashable to smashed
+	    				this.smashablesOnConveyor[key].smashed = true;
+	    			}
+	    			else
+	    				console.log("You lose!");
+	    			
+	    		}
+
     		}
 
     	}

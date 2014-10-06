@@ -45,7 +45,7 @@ define(function(require, exports, module) {
                 size: [110, 85],
                 smashable: true,
                 initialPoolSize: 5,
-                placementOdds: .28,
+                placementOdds: .0,
                 classes: ["smashables", "smashable-old-pc"]
             },
 
@@ -53,7 +53,7 @@ define(function(require, exports, module) {
                 size: [400, 80],
                 smashable: true,
                 initialPoolSize: 2,
-                placementOdds: .02,
+                placementOdds: .30,
                 classes: ["smashables", "smashable-matt-forte"]
             },
 
@@ -128,10 +128,20 @@ define(function(require, exports, module) {
             var minGapDuration = this.types[key].size[0] / distanceSpeedRatio;
                 minGapDuration += minPixelGap / distanceSpeedRatio;
 
-            console.log(minGapDuration);
-
             this.types[key].minGapDuration = Math.round(minGapDuration);
         }
+    }
+
+    Smashables.prototype.getPositionFromElapsed = function(type, elapsed, conveyorDistance) {
+
+        var position = new Array();
+
+        position[0] = ((conveyorDistance + this.types[type].size[0]) / this.types[type].duration);
+        position[0] = (position[0] * elapsed) - this.types[type].size[0];
+
+        position[1] = position[0] + this.types[type].size[0];
+
+        return position;
     }
 
     Smashables.prototype.generateRandToTypeArray = function() {

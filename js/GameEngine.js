@@ -31,6 +31,13 @@ define(function(require, exports, module) {
     	//Milliseconds it takes for an object to traverse the conveyor belt
     	this.conveyorSpeed = 2000;
 
+    	//An array of objects containing info on the current smashables on the conveyor
+    	this.smashablesOnConveyor = new Array();
+
+    	//Conveyor distance window within which Brad's tablet strikes the smashable
+    	this.hitWindow = new Array();
+
+    	///Initialize indicies used for selection of random indicies
     	this.placementIndexForRandom = 99;
     	this.smashableIndexForRandom = 0;
 
@@ -84,8 +91,6 @@ define(function(require, exports, module) {
     			return;
     		}
 
-    		console.log([durationSinceLast, this.smashables.types[smashableType].minGapDuration]);
-
     		this.lastMinGap = this.smashables.types[smashableType].minGapDuration;
     		this.placementIndexForRandom--;
     		this.smashableIndexForRandom++;
@@ -111,9 +116,23 @@ define(function(require, exports, module) {
     		// and smashable width.
     		var duration = this.smashables.types[type].duration;
 
+    		//Record the time (in milliseconds) the smashable was placed
+    		//and its type 
+    		var time = new Date();
+    			time = time.getTime();
+
+    		this.smashablesOnConveyor[time.toString()] = {type: type, placed: time};
+
+	    	//Send the smashable down the conveyor, 
 	    	this.smashables.types[type].modifierPool[index].setTransform(
 				Transform.translate((this.conveyorDistance * -1), 330, 0),
-			 	{ duration : duration }
+			 	{ duration : duration },
+			 	function() {
+
+			 		//Remove the smashable from the conveyor list when
+			 		//it reaches the end.
+					delete this.smashablesOnConveyor[time.toString()];
+				}.bind(this)
 			);
 
 			this.smashables.types[type].modifierPool[index].setTransform(
@@ -149,6 +168,8 @@ define(function(require, exports, module) {
 
   	function _slap() {
 
+  		_detectHit.call(this)
+
   		this._gameObjects.bradsTabletModifier.setTransform(
 				Transform.translate(-550, 260, 0),
 			 	{ duration : 25 }
@@ -159,6 +180,36 @@ define(function(require, exports, module) {
 			 	{ duration : 25 }
 		);
 
+  	}
+
+  	function _detectHit() {
+
+  		//Get the current time in milliseconds
+  		var time = new Date();
+    		time = time.getTime();
+
+    	//Loop through opjects on the conveyor and determine of they were hit
+    	for(var key in this.smashablesOnConveyor) {
+
+    		var smashableInfo = this.smashablesOnConveyor[key],
+    		    timeElasped = time - smashableInfo.placed;
+
+    		var position = this.smashables.getPositionFromElapsed(smashableInfo.type,
+    												   			  timeElasped,
+    												   			  this.conveyorDistance);
+    		
+    		//Test for three cases: 1. Is the trailing edge of the object in the window?
+    		//						2. Is the leading edge of the object in the window?
+    		//						3. Is the window within the object?
+    		//If any are true it's a hit!
+    		if((position[0] >= this.hitWindow[0]) && (position[0] <= this.hitWindow[1]) ||
+    		   (position[1] >= this.hitWindow[0]) && (position[1] <= this.hitWindow[1]) ||
+    		   (this.hitWindow[0] >= position[0]) && (this.hitWindow[1] <= position[1])) {
+
+    			console.log(smashableInfo.type);
+    		}
+
+    	}
   	}
 
     function _generateRandomIndices() {
@@ -188,6 +239,12 @@ define(function(require, exports, module) {
 
     	//Generate random number array
     	_generateRandomIndices.call(this);
+
+    	//Calculate the distance window within which Brad's tablet strikes the smashable
+    	this.hitWindow[1] = ((this._gameObjects.bradsLocation[0] * -1) + 99);
+    	this.hitWindow[0] = ((this._gameObjects.bradsLocation[0] * -1));
+
+    	console.log(this._gameObjects.bradsLocation[0]);
 
     	//Start the game loop
     	Timer.setInterval(_mainLoop.bind(this), this.engineLoopFrequency);

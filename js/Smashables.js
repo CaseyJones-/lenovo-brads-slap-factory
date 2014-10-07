@@ -144,6 +144,19 @@ define(function(require, exports, module) {
         return position;
     }
 
+    Smashables.prototype.getMaxDuration = function() {
+
+        var maxDuration = 0;
+
+        for(var key in this.types) {
+
+            if(this.types[key].duration > maxDuration)
+                maxDuration = this.types[key].duration;
+        }
+
+        return maxDuration;
+    }
+
     Smashables.prototype.generateRandToTypeArray = function() {
 
         this.randToType = new Array();

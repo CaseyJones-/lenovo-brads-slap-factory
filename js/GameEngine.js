@@ -28,8 +28,14 @@ define(function(require, exports, module) {
     	this.randomIndices = new Array();
     	this.lastMinGap = 0;
 
+    	this.gameStartTime = new Date();
+    	this.gameStartTime = this.gameStartTime.getTime();
+
     	//Milliseconds it takes for an object to traverse the conveyor belt
     	this.conveyorSpeed = 2000;
+    	this.conveyorSpeedIncrease = 100; 	  //Speed to increase the conveyor by
+    	this.conveyorSpeedInterval = 10000;  //How often (in ms) the coveyor speed increases
+    	this.conveyorLastIncreaseTime = this.gameStartTime; //The last time (in ms) speed increased
 
     	//An array of objects containing info on the current smashables on the conveyor
     	this.smashablesOnConveyor = new Array();
@@ -91,23 +97,31 @@ define(function(require, exports, module) {
     			return;
     		}
 
-    		this.lastMinGap = this.smashables.types[smashableType].minGapDuration;
-    		this.placementIndexForRandom--;
-    		this.smashableIndexForRandom++;
-    		this.cyclesSinceLast = 0;
+		    //Make a conveyor speed update call and return for speed increase
+	    	if(_updateConveyorSpeed.call(this)) {
+		    	return;
+	    	}
+	    	else {  //Otherwise update state and place the smashable
+	    		this.placementIndexForRandom--;
+	    		this.smashableIndexForRandom++;
+	    		this.cyclesSinceLast = 0;
 
+	    		this.lastMinGap = this.smashables.types[smashableType].minGapDuration;
+	    		_placeSmashable.call(this, smashableType);
+	    	}
 
-    		_placeSmashable.call(this, smashableType);
+    		
     	}
     }
 
 
     function _placeSmashable(type) {
     	
+    	//If no surfaces are availible to send, return false
     	if(this.smashables.types[type].surfacesAvailable.length == 0) {
     		return false;
     	}
-    	else {
+    	else { //Otherwise...
 
     		// Grab the index of the available smashable
     		var index = this.smashables.types[type].surfacesAvailable.pop();
@@ -229,6 +243,50 @@ define(function(require, exports, module) {
     		}
 
     	}
+  	}
+
+  	function _updateConveyorSpeed() {
+
+  		//Increase the conveyor speed if required
+    	var currentTime = new Date();
+    	currentTime = currentTime.getTime();
+
+    	//Clear the board and update the conveyor speed as needed by...
+    	var timeSinceLast = currentTime - this.conveyorLastIncreaseTime;
+
+    	console.log(this.conveyorSpeed);
+
+    	//If a speed increase is necessary...
+    	if(timeSinceLast > this.conveyorSpeedInterval) {
+
+    		//Getting the current max duration for the smashables
+	    	var maxDuration = this.smashables.getMaxDuration();
+
+	    	//Clearing the board with a gap equal to the
+		   	//current max duration before using the new speed
+	    	this.lastMinGap = maxDuration + 200;
+
+    		//Update the increase time
+    		this.conveyorLastIncreaseTime = currentTime;
+    		
+    		//Add a hook to the engine to update the conveyor speed in the future
+    		//when the conveyor is cleared
+    		Timer.setTimeout(function() {
+
+    			this.conveyorSpeed -= this.conveyorSpeedIncrease;
+
+	    		//Re-calculate the durations for each smashable type
+	    		this.smashables.calcDurations(this.conveyorDistance, this.conveyorSpeed);
+
+		    	//Re-calculate the minimum gap durations for each smashable type
+		    	this.smashables.calcMinGapDurations(this.conveyorDistance, this.conveyorSpeed, 50);
+
+    		}.bind(this), (maxDuration + 200));
+    		
+    		return true;
+    	}
+    	else
+    		return false;
   	}
 
     function _generateRandomIndices() {

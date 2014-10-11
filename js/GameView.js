@@ -34,10 +34,35 @@ define(function(require, exports, module) {
 
         _createHeader.call(this);
         _createGameWorld.call(this);
+        _addGameStartScreen.call(this);
+        _addGameoverScreen.call(this);
         _addSmashables.call(this);
         _addBrad.call(this);
 
-        this.gameEngine.startGame();
+        
+        //Remove start screen and start the game when
+        //the start screen is clicked
+        this.gameObjects.startScreen.on('click', function() {
+          
+          this.gameObjects.startScreen.setProperties({
+            zIndex: '-4' 
+          });
+          
+          this.gameEngine.startGame();
+        }.bind(this));
+
+        //Reveal the start screen when the game over screen is clicked  
+        this.gameObjects.gameoverScreen.on('click', function() {
+          
+          this.gameObjects.gameoverScreen.setProperties({
+            zIndex: '-4' 
+          });
+
+          this.gameObjects.startScreen.setProperties({
+            zIndex: '4'
+          });
+        }.bind(this));
+        
     }
 
     //Extend the View prototype and assign our constructor
@@ -170,9 +195,57 @@ define(function(require, exports, module) {
 
     }
 
+    function _addGameStartScreen() {
+
+      //Set the size and position based on the browser window size
+      var xSize = this.contentWindowSize[0] * 0.8,
+          ySize = this.contentWindowSize[1] * 0.8,
+          xDiff = this.contentWindowSize[0] * 0.1,
+          yDiff = this.contentWindowSize[1] * 0.1;
+
+      this.gameObjects.startScreenModifier = new Modifier({
+        origin: [0, 0],
+        transform : Transform.translate(xDiff, yDiff, 0)
+      });
+
+      var content = "Slap all the old PCs and Macs";
+
+      this.gameObjects.startScreen = new Surface({
+        content: content,
+        size: [xSize, ySize],
+        classes: ["start-screen"]
+      });
+
+      this.content.add(this.gameObjects.startScreenModifier).add(this.gameObjects.startScreen);
+
+    }
+
+    function _addGameoverScreen() {
+
+      //Set the size and position based on the browser window size
+      var xSize = this.contentWindowSize[0] * 0.8,
+          ySize = this.contentWindowSize[1] * 0.8,
+          xDiff = this.contentWindowSize[0] * 0.1,
+          yDiff = this.contentWindowSize[1] * 0.1;
+
+      this.gameObjects.gameoverScreenModifier = new Modifier({
+        origin: [0, 0],
+        transform : Transform.translate(xDiff, yDiff, 0)
+      });
+
+      this.gameObjects.gameoverScreen = new Surface({
+        content: "GAME OVER! <br /> Score: <br />",
+        size: [xSize, ySize],
+        classes: ["gameover-screen"]
+      });
+
+      this.content.add(this.gameObjects.gameoverScreenModifier).add(this.gameObjects.gameoverScreen);
+      
+    }
+
     function _getContentWindowSize() {
 
-      return Array((window.innerWidth - this.options.headerSize), (window.innerHeight - this.options.headerSize));
+      return Array((window.innerWidth), (window.innerHeight - this.options.headerSize));
     }
 
 

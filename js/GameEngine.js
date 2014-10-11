@@ -28,6 +28,10 @@ define(function(require, exports, module) {
     	this.randomIndices = new Array();
     	this.lastMinGap = 0;
 
+    	this.loops = new Array();
+    	this.loopNum = 0;
+    	this.currentLoop = 0;
+
     	this.gameStartTime = new Date();
     	this.gameStartTime = this.gameStartTime.getTime();
 
@@ -70,7 +74,11 @@ define(function(require, exports, module) {
 
     /*--- PRIVATE METHODS ---*/
 
-    function _mainLoop() {
+    function _mainLoop(loopNum) {
+
+    	//If this loop hads been 'gameovered', return.
+    	if(!this.loops[loopNum])
+    		return;
 
     	if(this.placementIndexForRandom < 0)
     		this.placementIndexForRandom = 99;
@@ -143,9 +151,16 @@ define(function(require, exports, module) {
 			 	{ duration : duration },
 			 	function() {
 
-			 		//Remove the smashable from the conveyor list when
-			 		//it reaches the end.
-					delete this.smashablesOnConveyor[time.toString()];
+			 		//Otherwise remove the smashable from the conveyor list
+
+			 		//If a smashable that was supposed to be hit was not,
+			 		//end the game.
+			 		var type = this.smashables.types[this.smashablesOnConveyor[time.toString()].type];
+
+			 		if(type.smashable && !this.smashablesOnConveyor[time.toString()].smashed)
+			 			_gameover.call(this, ("You failed to slap " + type.properName + "!"));
+			 		else
+						delete this.smashablesOnConveyor[time.toString()];
 				}.bind(this)
 			);
 
@@ -182,12 +197,12 @@ define(function(require, exports, module) {
 
   	function _slap() {
 
-  		_detectHit.call(this)
-
   		this._gameObjects.bradsTabletModifier.setTransform(
 				Transform.translate(-550, 260, 0),
 			 	{ duration : 25 }
 		);
+
+		_detectHit.call(this);
 
 		this._gameObjects.bradsTabletModifier.setTransform(
 				Transform.translate(-550, 215, 0),
@@ -235,8 +250,12 @@ define(function(require, exports, module) {
 	    				//Set this smashable to smashed
 	    				this.smashablesOnConveyor[key].smashed = true;
 	    			}
-	    			else
-	    				console.log("You lose!");
+	    			else  {
+
+	    				var type = this.smashables.types[smashableInfo.type];
+
+	    				_gameover.call(this, "You slapped " + type.properName + "!");	
+	    			}
 	    			
 	    		}
 
@@ -253,8 +272,6 @@ define(function(require, exports, module) {
 
     	//Clear the board and update the conveyor speed as needed by...
     	var timeSinceLast = currentTime - this.conveyorLastIncreaseTime;
-
-    	console.log(this.conveyorSpeed);
 
     	//If a speed increase is necessary...
     	if(timeSinceLast > this.conveyorSpeedInterval) {
@@ -289,6 +306,26 @@ define(function(require, exports, module) {
     		return false;
   	}
 
+  	function _gameover(message) {
+
+  		//Only write to the gameover screen if it hasn't already been written to for this loop
+  		if(!this.loops[this.currentLoop])
+  			return;
+
+  		//Stop the main loop
+  		this.loops[this.currentLoop] = false;
+
+  		//Populate the game over screen
+  		var content = 'GAME OVER <br /> Score: ' + this.score + '<br />' + message;
+
+  		this._gameObjects.gameoverScreen.setContent(content);
+
+  		//Display the game over screen
+  		this._gameObjects.gameoverScreen.setProperties({
+    		zIndex: '4' 
+    	});
+  	}
+
     function _generateRandomIndices() {
 
     	for(var i = 0; i < 100; i++) {
@@ -304,6 +341,10 @@ define(function(require, exports, module) {
     /*--- PUBLIC METHODS ---*/
 
     GameEngine.prototype.startGame = function() {
+
+    	//Reset the game score to zero
+    	this.score = 0;
+	   	this._gameObjects.score.setContent('Score: ' + 0);
 
     	//Calculate the durations for each smashable type
     	this.smashables.calcDurations(this.conveyorDistance, this.conveyorSpeed);
@@ -321,10 +362,17 @@ define(function(require, exports, module) {
     	this.hitWindow[1] = ((this._gameObjects.bradsLocation[0] * -1) + 99);
     	this.hitWindow[0] = ((this._gameObjects.bradsLocation[0] * -1));
 
-    	console.log(this._gameObjects.bradsLocation[0]);
+    	//Increment loop number
+    	this.loopNum++;
+    	this.currentLoop = this.loopNum;
+
+    	var loopNum = this.loopNum;
+
+    	//Set current loop to running
+    	this.loops[loopNum] = true;
 
     	//Start the game loop
-    	Timer.setInterval(_mainLoop.bind(this), this.engineLoopFrequency);
+    	Timer.setInterval(_mainLoop.bind(this, loopNum), this.engineLoopFrequency);
 
     }
     /*--- END PUBLIC METHODS --*/

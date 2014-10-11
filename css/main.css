@@ -67,6 +67,18 @@ body {
     z-index: 3;
 }
 
+.start-screen {
+    color: #fff;
+    background-color: #33f;
+    z-index: 4;
+}
+
+.gameover-screen {
+    color: #fff;
+    background-color: #33f;
+    z-index: -4;
+}
+
 
 /* Smashables */
 .smashables {

@@ -22,6 +22,7 @@ define(function(require, exports, module) {
                 smashable: false,
                 initialPoolSize: 5,
                 placementOdds: .2,
+                properName: "an Orange Lenovo",
                 classes: ["smashables", "smashable-orange-lenovo"]
             },
 
@@ -30,6 +31,7 @@ define(function(require, exports, module) {
                 smashable: false,
                 initialPoolSize: 5,
                 placementOdds: .2,
+                properName: "a Silver Lenovo",
                 classes: ["smashables", "smashable-silver-lenovo"]
             },
 
@@ -38,6 +40,7 @@ define(function(require, exports, module) {
                 smashable: true,
                 initialPoolSize: 5,
                 placementOdds: .28,
+                properName: "a Fruit PC",
                 classes: ["smashables", "smashable-fruit-pc"]
             },
 
@@ -46,22 +49,25 @@ define(function(require, exports, module) {
                 smashable: true,
                 initialPoolSize: 5,
                 placementOdds: .28,
+                properName: "an Old PC",
                 classes: ["smashables", "smashable-old-pc"]
             },
 
             mattForte: {
                 size: [400, 80],
-                smashable: true,
+                smashable: false,
                 initialPoolSize: 2,
                 placementOdds: .02,
+                properName: "Matt Forte",
                 classes: ["smashables", "smashable-matt-forte"]
             },
 
             andrewLuck: {
                 size: [380, 80],
-                smashable: true,
+                smashable: false,
                 initialPoolSize: 2,
                 placementOdds: .02,
+                properName: "Andrew Luck",
                 classes: ["smashables", "smashable-andrew-luck"]
             }
         }

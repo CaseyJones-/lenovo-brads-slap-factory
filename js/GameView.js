@@ -208,7 +208,8 @@ define(function(require, exports, module) {
         transform : Transform.translate(xDiff, yDiff, 0)
       });
 
-      var content = "Slap all the old PCs and Macs";
+      var content = 'Slap all the old PCs and Macs by clicking or tapping.';
+          content += '<br /> <br /> CLICK OR TAP TO START THE GAME!';
 
       this.gameObjects.startScreen = new Surface({
         content: content,

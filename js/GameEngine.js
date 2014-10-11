@@ -316,7 +316,8 @@ define(function(require, exports, module) {
   		this.loops[this.currentLoop] = false;
 
   		//Populate the game over screen
-  		var content = 'GAME OVER <br /> Score: ' + this.score + '<br />' + message;
+  		var content = 'GAME OVER <br /><br /> Score: ' + this.score + '<br /><br />' + message;
+  			content += '<br /><br >CLICK OR TAP TO CONTINUE';
 
   		this._gameObjects.gameoverScreen.setContent(content);
 
@@ -345,6 +346,9 @@ define(function(require, exports, module) {
     	//Reset the game score to zero
     	this.score = 0;
 	   	this._gameObjects.score.setContent('Score: ' + 0);
+
+	   	//Reset conveyor speed
+	   	this.conveyorSpeed = 2000;
 
     	//Calculate the durations for each smashable type
     	this.smashables.calcDurations(this.conveyorDistance, this.conveyorSpeed);

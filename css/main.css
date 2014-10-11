@@ -67,15 +67,17 @@ body {
     z-index: 3;
 }
 
-.start-screen {
+.start-screen, .gameover-screen{
     color: #fff;
+    font-size: 18px;
+    text-align: center;
+    padding-top: 5%;
+    vertical-align: middle;
     background-color: #33f;
     z-index: 4;
 }
 
 .gameover-screen {
-    color: #fff;
-    background-color: #33f;
     z-index: -4;
 }
 

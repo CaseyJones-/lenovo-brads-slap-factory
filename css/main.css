@@ -54,6 +54,11 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#636363', endColorstr='#dbdbdb',GradientType=0 ); /* IE6-9 */
 }
 
+.tough-season-poster {
+    background-image: url('../images/tough-season-poster.png');
+    z-index: 1;
+}
+
 .conveyor {
     background-image: url('../images/conveyor_belt.png');
     z-index: 1;

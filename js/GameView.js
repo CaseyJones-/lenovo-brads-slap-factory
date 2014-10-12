@@ -7,6 +7,7 @@ define(function(require, exports, module) {
     var StateModifier = require('famous/modifiers/StateModifier');
     var HeaderFooterLayout = require("famous/views/HeaderFooterLayout");
     var GridLayout = require("famous/views/GridLayout");
+    var Timer = require('famous/utilities/Timer');
     var GameEngine = require("GameEngine");
     var Smashables = require("Smashables");
 
@@ -31,9 +32,11 @@ define(function(require, exports, module) {
         this.contentWindowSize = _getContentWindowSize.call(this);
         _calcLocations.call(this);
 
+        //Instantiate our smashables and gameEngine
         this.gameObjects.smashables = new Smashables(this.gameObjects);
         this.gameEngine = new GameEngine(this.gameObjects);
 
+        //Build the GameView
         _createHeader.call(this);
         _createGameWorld.call(this);
         _addGameStartScreen.call(this);
@@ -61,13 +64,18 @@ define(function(require, exports, module) {
         //Reveal the start screen when the game over screen is clicked  
         this.gameObjects.gameoverScreen.on('click', function() {
           
-          this.gameObjects.gameoverScreen.setProperties({
-            zIndex: '-4' 
-          });
+          //Create a bit of a delay for the coveyor to clear off
+          Timer.setTimeout(function(){
 
-          this.gameObjects.startScreen.setProperties({
-            zIndex: '4'
-          });
+            this.gameObjects.gameoverScreen.setProperties({
+              zIndex: '-4' 
+            });
+
+            this.gameObjects.startScreen.setProperties({
+              zIndex: '4'
+            });
+          }.bind(this), 1000);
+          
         }.bind(this));
         
     }
@@ -191,11 +199,20 @@ define(function(require, exports, module) {
           transform : Transform.translate(this.gameObjects.conveyorLocation[0], this.gameObjects.conveyorLocation[1], 0)
         });
 
+        this.content.toughSeasonPoster = new Surface({
+          size: [250, 139],
+          classes: ["tough-season-poster"]
+        });
 
+        this.content.toughSeasonPosterModifier = new StateModifier({
+          origin: [1, 0],
+          transform : Transform.translate(-20, 10, 0)
+        });
 
         this.content.add(this.content.wall);
         this.content.add(this.content.floorModifier).add(this.content.floor);
         this.content.add(this.gameObjects.conveyorModifier).add(this.gameObjects.conveyor);
+        this.content.add(this.content.toughSeasonPosterModifier).add(this.content.toughSeasonPoster);
     }
 
     function _addSmashables() {

@@ -18,6 +18,12 @@ define(function(require, exports, module) {
 
     	this._gameObjects = gameObjects;
     	this.smashables = gameObjects.smashables;
+
+    	//Add sound
+    	this._gameObjects.audio = new Object();
+    	this._gameObjects.audio.plusplus = new Audio("sound/plusplus.wav");
+    	this._gameObjects.audio.gameover = new Audio("sound/gameover.wav");
+
     	
     	if(this._gameObjects.smashablesLocation[0] == 1) {
     		this.conveyorDistance = (880 - this._gameObjects.conveyorLocation[0] + 50);
@@ -250,6 +256,9 @@ define(function(require, exports, module) {
 	    			//If the hit was on a smashable...
 	    			if(this.smashables.types[smashableInfo.type].smashable) {
 	    				
+	    				//Play the sound
+	    				this._gameObjects.audio.plusplus.play();
+
 	    				//Increment the score
 	    				this.score += 10;
 
@@ -320,6 +329,9 @@ define(function(require, exports, module) {
   		//Only write to the gameover screen if it hasn't already been written to for this loop
   		if(!this.loops[this.currentLoop])
   			return;
+
+  		//Play the sound
+  		this._gameObjects.audio.gameover.play();
 
   		//Stop the main loop
   		this.loops[this.currentLoop] = false;

@@ -273,7 +273,7 @@ define(function(require, exports, module) {
       });
 
       var content = 'BRAD\'S SLAP FACTORY<br /><br />';
-          content += 'Slap all the old PCs and Macs by clicking or tapping.';
+          content += 'Slap all the old PCs and Fruit PCs with Brad\'s Lenovo by clicking or tapping.';
           content += '<br /> <br /> CLICK OR TAP TO START THE GAME!';
 
       this.gameObjects.startScreen = new Surface({

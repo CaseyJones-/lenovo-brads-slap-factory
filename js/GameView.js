@@ -52,7 +52,7 @@ define(function(require, exports, module) {
         this.gameObjects.startScreen.on('click', function() {
           
           this.gameObjects.startScreen.setProperties({
-            zIndex: '-4' 
+            zIndex: '-1' 
           });
           
           this.gameEngine.startGame();
@@ -151,11 +151,11 @@ define(function(require, exports, module) {
         //gameObjects so it can be changed later.
         this.gameObjects.score = this.header.score;
 
-        this.header.gameTitleModifier = new Modifier({
+        this.header.gameTitleModifier = new StateModifier({
           origin: [0.05, 0.4]
         });
 
-        this.header.scoreModifier = new Modifier({
+        this.header.scoreModifier = new StateModifier({
           origin: [0.96, 0.4]
         });
 
@@ -177,7 +177,7 @@ define(function(require, exports, module) {
           classes: ["floor"]
         })
 
-        this.content.floorModifier = new Modifier({
+        this.content.floorModifier = new StateModifier({
           origin: [1, 1]
         });
 
@@ -186,7 +186,7 @@ define(function(require, exports, module) {
           classes: ["conveyor"]
         });
 
-        this.gameObjects.conveyorModifier = new Modifier({
+        this.gameObjects.conveyorModifier = new StateModifier({
           origin: [1, 0],
           transform : Transform.translate(this.gameObjects.conveyorLocation[0], this.gameObjects.conveyorLocation[1], 0)
         });
@@ -217,7 +217,7 @@ define(function(require, exports, module) {
 
       this.gameObjects.bradsLocation = bradsLocation;
 
-      this.gameObjects.bradModifier = new Modifier({
+      this.gameObjects.bradModifier = new StateModifier({
         origin: [1, 0],
         transform : Transform.translate(bradsLocation[0], bradsLocation[1], 0)
       });
@@ -227,7 +227,7 @@ define(function(require, exports, module) {
         classes: ["brad"]
       })
 
-      this.gameObjects.bradsTabletModifier = new Modifier({
+      this.gameObjects.bradsTabletModifier = new StateModifier({
         origin: [1, 0],
         transform : Transform.translate(bradsLocation[0], (bradsLocation[1] + bradsTabletYOffset), 0)
       });
@@ -250,7 +250,7 @@ define(function(require, exports, module) {
           xDiff = this.contentWindowSize[0] * 0.1,
           yDiff = this.contentWindowSize[1] * 0.1;
 
-      this.gameObjects.startScreenModifier = new Modifier({
+      this.gameObjects.startScreenModifier = new StateModifier({
         origin: [0, 0],
         transform : Transform.translate(xDiff, yDiff, 0)
       });
@@ -277,7 +277,7 @@ define(function(require, exports, module) {
           xDiff = this.contentWindowSize[0] * 0.1,
           yDiff = this.contentWindowSize[1] * 0.1;
 
-      this.gameObjects.gameoverScreenModifier = new Modifier({
+      this.gameObjects.gameoverScreenModifier = new StateModifier({
         origin: [0, 0],
         transform : Transform.translate(xDiff, yDiff, 0)
       });

@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"_game",
+				"_gameObjects"
+			],
+			[
+				"Set",
+				"setTimeout(function, milliseconds);"
+			],
+			[
 				"smash",
 				"smashablesOnConveyor"
 			],
@@ -91,7 +99,7 @@
 			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 1344,
+				"buffer_size": 1347,
 				"line_ending": "Unix"
 			}
 		},
@@ -99,18 +107,15 @@
 			"file": "css/main.css",
 			"settings":
 			{
-				"buffer_size": 2933,
+				"buffer_size": 3030,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "define(function(require, exports, module) {\n    var View = require('famous/core/View');\n    var Surface = require('famous/core/Surface');\n    var Transform = require('famous/core/Transform');\n    var Modifier = require('famous/core/Modifier');\n    var StateModifier = require('famous/modifiers/StateModifier');\n    var HeaderFooterLayout = require(\"famous/views/HeaderFooterLayout\");\n    var GridLayout = require(\"famous/views/GridLayout\");\n    var GameEngine = require(\"GameEngine\");\n    var Smashables = require(\"Smashables\");\n\n    /*-- \n        PUBLIC VARIABLE LIST\n        \n\n     --*/\n    \n    /*--- CONSTRUCTION ---*/\n\n    //Prototype constructor\n    function GameView() {\n\n        //Call the upstream constructor with our 'this' pointer and arguments\n        HeaderFooterLayout.apply(this, arguments);\n\n        this.gameObjects = new Object();\n        this.gameObjects.smashables = new Smashables();\n\n        this.gameEngine = new GameEngine(this.gameObjects);\n\n        this.options.headerSize = 60;\n\n        this.contentWindowSize = _getContentWindowSize.call(this);\n\n        _createHeader.call(this);\n        _createGameWorld.call(this);\n        _addSmashables.call(this);\n        _addBrad.call(this);\n\n        this.gameEngine.startGame();\n    }\n\n    //Extend the View prototype and assign our constructor\n    GameView.prototype = Object.create(HeaderFooterLayout.prototype);\n    GameView.prototype.constructor = GameView;\n\n    //Set the default options\n    GameView.DEFAULT_OPTIONS = {\n        headerSize: 100,\n        footerSize: 50\n    };\n\n    /*--- END CONSTRUCTION ---*/\n\n\n    /*--- PRIVATE METHODS ---*/\n\n\n    function _createHeader() {\n\n        this.header.bar = new Surface({\n          size: [undefined, 60],\n          classes: [\"header\"]\n        })\n\n        this.header.gameTitle = new Surface({\n          content: \"Brad's Slapapalooza\",\n          size: [true, true],\n          classes: [\"header\"]\n        });\n\n        this.header.score = new Surface({\n          content: (\"Score: \" + this.gameEngine.score),\n          size: [true, true],\n          classes: [\"header\"]\n        });\n\n        //Grab a reference to the score surface and put it in\n        //gameObjects so it can be changed later.\n        this.gameObjects.score = this.header.score;\n\n        this.header.gameTitleModifier = new Modifier({\n          origin: [0.5, 0.4]\n        });\n\n        this.header.scoreModifier = new Modifier({\n          origin: [0.96, 0.4]\n        });\n\n        this.header.add(this.header.bar);\n        this.header.add(this.header.gameTitleModifier).add(this.header.gameTitle);\n        this.header.add(this.header.scoreModifier).add(this.header.score);\n      \n    }\n\n    function _createGameWorld() {\n        \n        this.content.wall = new Surface({\n          size: [undefined, (this.contentWindowSize[1] * 0.6)],\n          classes: [\"wall\"]\n        });\n\n        this.content.floor = new Surface({\n          size: [undefined, (this.contentWindowSize[1] * 0.4)],\n          classes: [\"floor\"]\n        })\n\n        this.content.floorModifier = new Modifier({\n          origin: [1, 1]\n        });\n\n        this.gameObjects.conveyor = new Surface({\n          size: [880, 220],\n          classes: [\"conveyor\"]\n        });\n\n        this.gameObjects.conveyorModifier = new Modifier({\n          origin: [1, 0.8]\n        });\n\n        this.content.add(this.content.wall);\n        this.content.add(this.content.floorModifier).add(this.content.floor);\n        this.content.add(this.gameObjects.conveyorModifier).add(this.gameObjects.conveyor);\n    }\n\n    function _addSmashables() {\n\n        for(var key in this.gameObjects.smashables.types) {\n\n            for(var j = 0; j < this.gameObjects.smashables.types[key].initialPoolSize; j++) {\n\n                this.content.add(this.gameObjects.smashables.types[key].modifierPool[j])\n                            .add(this.gameObjects.smashables.types[key].surfacePool[j]);\n            }\n        }\n    }\n\n    function _addBrad() {\n\n      var bradsLocation = new Array(-550, 110);\n      var bradsTabletYOffset = 115;\n\n      this.gameObjects.bradsLocation = bradsLocation;\n\n      //How much farther the Tablet is offset on the Y axis from brad\n      this.gameObjects.bradsTabletYOffset = bradsTabletYOffset;\n\n      this.gameObjects.bradModifier = new Modifier({\n        origin: [1, 0],\n        transform : Transform.translate(bradsLocation[0], bradsLocation[1], 0)\n      });\n\n      this.gameObjects.brad = new Surface({\n        size: [101, 400],\n        classes: [\"brad\"]\n      })\n\n      this.gameObjects.bradsTabletModifier = new Modifier({\n        origin: [1, 0],\n        transform : Transform.translate(bradsLocation[0], (bradsLocation[1] + bradsTabletYOffset), 0)\n      });\n\n      this.gameObjects.bradsTablet = new Surface({\n        size: [101, 83],\n        classes: [\"brads-tablet\"]\n      })\n\n      this.content.add(this.gameObjects.bradModifier).add(this.gameObjects.brad);\n      this.content.add(this.gameObjects.bradsTabletModifier).add(this.gameObjects.bradsTablet);\n\n    }\n\n    function _addGameStartScreen() {\n\n      //Set the size and position based on the browser window size\n      var xSize = this.contentWindowSize[0] * 0.8,\n          ySize = this.contentWindowSize[1] * 0.8,\n          xDiff = this.contentWindowSize[0] * 0.2,\n          yDiff = this.contentWindowSize[1] * 0.2;\n\n      this.gameObjects.startScreenModifier = new Modifier({\n        origin: [0, 0],\n        transform : Transform.translate(xDiff, yDiff, 0)\n      });\n\n      this.gameObjects.startScreen = new Surface({\n        content\n        \n        size: [xSize, ySize],\n        classes: [\"start-screen\"]\n      });\n\n    }\n\n    function _addGameoverScreen() {\n\n      //Set the size and position based on the browser window size\n      var xSize = this.contentWindowSize[0] * 0.8,\n          ySize = this.contentWindowSize[1] * 0.8,\n          xDiff = this.contentWindowSize[0] * 0.2,\n          yDiff = this.contentWindowSize[1] * 0.2;\n\n      this.gameObjects.gameoverScreenModifier = new Modifier({\n        origin: [0, 0],\n        transform : Transform.translate(xDiff, yDiff, 0)\n      });\n\n      this.gameObjects.gameoverScreen = new Surface({\n        content: \"GAME OVER! <br /> Score: <br />\"\n        size: [xSize, ySize],\n        classes: [\"gameover-screen\"]\n      });\n\n      \n    }\n\n    function _getContentWindowSize() {\n\n      return Array((window.innerWidth), (window.innerHeight - this.options.headerSize));\n    }\n\n\n\n\n    /*--- END PRIVATE METHODS ---*/\n\n\n    /*--- PUBLIC METHODS ---*/\n\n\n    /*--- END PUBLIC METHODS --*/\n\n    module.exports = GameView;\n});",
 			"file": "js/GameView.js",
-			"file_size": 6501,
-			"file_write_time": 130573044468451720,
 			"settings":
 			{
-				"buffer_size": 6577,
+				"buffer_size": 9376,
 				"line_ending": "Unix"
 			}
 		},
@@ -118,7 +123,7 @@
 			"file": "js/GameEngine.js",
 			"settings":
 			{
-				"buffer_size": 9746,
+				"buffer_size": 11861,
 				"line_ending": "Unix"
 			}
 		},
@@ -126,7 +131,15 @@
 			"file": "js/Smashables.js",
 			"settings":
 			{
-				"buffer_size": 5013,
+				"buffer_size": 5351,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/bootstrap.js",
+			"settings":
+			{
+				"buffer_size": 250,
 				"line_ending": "Unix"
 			}
 		}
@@ -221,6 +234,15 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"modifier",
+			"zindex",
+			"z-index",
+			"console.",
+			"score",
+			"hitWin",
+			"console.",
+			"Timer",
+			"console.log",
 			"contentWin",
 			"console",
 			"smashableRandomIndex",
@@ -349,7 +371,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -358,15 +380,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1344,
+						"buffer_size": 1347,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1015,
+								1015
 							]
 						],
 						"settings":
@@ -388,15 +410,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2933,
+						"buffer_size": 3030,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2419,
-								2419
+								0,
+								0
 							]
 						],
 						"settings":
@@ -406,10 +428,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 714.0,
+						"translation.y": 1053.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -418,15 +440,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6577,
+						"buffer_size": 9376,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5554,
-								5554
+								8694,
+								8694
 							]
 						],
 						"settings":
@@ -436,10 +458,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2762.0,
+						"translation.y": 4581.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -448,15 +470,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9746,
+						"buffer_size": 11861,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7994,
-								7994
+								0,
+								0
 							]
 						],
 						"settings":
@@ -464,10 +486,10 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 4247.0,
+						"translation.y": 4837.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -476,15 +498,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5013,
+						"buffer_size": 5351,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4243,
-								4243
+								2997,
+								2997
 							]
 						],
 						"settings":
@@ -494,7 +516,35 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2046.0,
+						"translation.y": 1068.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "js/bootstrap.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 250,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								48,
+								48
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,

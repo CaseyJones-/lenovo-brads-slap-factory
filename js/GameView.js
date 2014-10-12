@@ -27,6 +27,8 @@ define(function(require, exports, module) {
 
         this.gameObjects = new Object();
 
+        this.firstGame = true;
+
         this.options.headerSize = 60;
 
         this.contentWindowSize = _getContentWindowSize.call(this);
@@ -55,17 +57,31 @@ define(function(require, exports, module) {
         this.gameObjects.startScreen.on('click', function() {
           
           this.gameObjects.startScreen.setProperties({
-            zIndex: '-1' 
+            zIndex: '-4' 
           });
-          
-          this.gameEngine.startGame();
+
+          //If this is the first game, skip the conveyor delay
+          if(this.firstGame) {
+
+            this.firstGame = false;
+            Timer.debounce(this.gameEngine.startGame(), 3000);
+          }
+          else {  //Otherwise...
+
+            Timer.setTimeout(function() {
+
+              console.log('Hi!');
+
+              Timer.debounce(this.gameEngine.startGame(), 3000);
+
+            }.bind(this), 1000);
+
+          }
+
         }.bind(this));
 
         //Reveal the start screen when the game over screen is clicked  
         this.gameObjects.gameoverScreen.on('click', function() {
-          
-          //Create a bit of a delay for the coveyor to clear off
-          Timer.setTimeout(function(){
 
             this.gameObjects.gameoverScreen.setProperties({
               zIndex: '-4' 
@@ -74,7 +90,6 @@ define(function(require, exports, module) {
             this.gameObjects.startScreen.setProperties({
               zIndex: '4'
             });
-          }.bind(this), 1000);
           
         }.bind(this));
         

@@ -54,7 +54,7 @@ define(function(require, exports, module) {
             },
 
             mattForte: {
-                size: [400, 80],
+                size: [295, 85],
                 smashable: false,
                 initialPoolSize: 2,
                 placementOdds: .02,
@@ -63,7 +63,7 @@ define(function(require, exports, module) {
             },
 
             andrewLuck: {
-                size: [380, 80],
+                size: [301, 85],
                 smashable: false,
                 initialPoolSize: 2,
                 placementOdds: .02,

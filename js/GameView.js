@@ -93,10 +93,16 @@ define(function(require, exports, module) {
           conveyorLocation[0] = 880 - this.contentWindowSize[0];
 
           smashablesLocation[0] = 1;  //Set this to 1 to denote the shift
+
+          //Set the header game title
+          this.header.titleText = 'Brad\'s SF'; 
         }
         else {  //Otherwise start at zero
           smashablesLocation[0] = 0;
           conveyorLocation[0] = 0;
+
+          //Set the header game title
+          this.header.titleText = 'Brad\'s Slap Factory'; 
         }
 
         //Calculate conveyor Y placement based on screen size
@@ -113,8 +119,6 @@ define(function(require, exports, module) {
         this.gameObjects.conveyorLocation = conveyorLocation;
         this.gameObjects.bradsLocation = bradsLocation;
         this.gameObjects.smashablesLocation = smashablesLocation;
-
-        console.log(this.gameObjects);
     }
 
 
@@ -126,13 +130,13 @@ define(function(require, exports, module) {
         })
 
         this.header.gameTitle = new Surface({
-          content: "Brad's Slap Factory",
+          content: this.header.titleText,
           size: [true, true],
           classes: ["header"]
         });
 
         this.header.score = new Surface({
-          content: ("Score: " + this.gameEngine.score),
+          content: ("0"),
           size: [true, true],
           classes: ["header"]
         });

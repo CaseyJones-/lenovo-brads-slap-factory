@@ -171,7 +171,7 @@ define(function(require, exports, module) {
 			);
 
 			this.smashables.types[type].modifierPool[index].setTransform(
-				Transform.translate(((130 + this.conveyorDistance) * -1), (this._gameObjects.conveyorLocation[1] + 300), 0),
+				Transform.translate(((130 + this.conveyorDistance) * -1), (this._gameObjects.conveyorLocation[1] * 2), 0),
 				{ duration : 100, curve: Easing.inOutSine },
 				function() {
 					this.smashables.types[type].surfacePool[index].setProperties(
@@ -238,8 +238,6 @@ define(function(require, exports, module) {
 	    		var position = this.smashables.getPositionFromElapsed(smashableInfo.type,
 	    												   			  timeElasped,
 	    												   			  this.conveyorDistance);
-
-	    		console.log(position);
 	    		
 	    		//Test for three cases: 1. Is the trailing edge of the object in the window?
 	    		//						2. Is the leading edge of the object in the window?
@@ -256,7 +254,7 @@ define(function(require, exports, module) {
 	    				this.score += 10;
 
 	    				//Change the content of the score object
-	    				this._gameObjects.score.setContent('Score: ' + this.score);
+	    				this._gameObjects.score.setContent(this.score);
 
 	    				//Set this smashable to smashed
 	    				this.smashablesOnConveyor[key].smashed = true;
@@ -356,7 +354,7 @@ define(function(require, exports, module) {
 
     	//Reset the game score to zero
     	this.score = 0;
-	   	this._gameObjects.score.setContent('Score: ' + 0);
+	   	this._gameObjects.score.setContent(0);
 
 	   	//Reset conveyor speed
 	   	this.conveyorSpeed = 2000;

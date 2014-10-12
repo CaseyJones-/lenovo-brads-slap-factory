@@ -17,12 +17,12 @@ body {
 
     font-smooth: never !important;
     -webkit-font-smoothing : none !important;
-    image-rendering: optimizeSpeed !important;             // Older versions of FF
-    image-rendering: -moz-crisp-edges !important;          // FF 6.0+
-    image-rendering: -webkit-optimize-contrast !important; // Safari
-    image-rendering: -o-crisp-edges !important;            // OS X & Windows Opera (12.02+)
-    image-rendering: pixelated !important;                 // Awesome future-browsers
-    -ms-interpolation-mode: nearest-neighbor !important;   // IE
+    image-rendering: optimizeSpeed !important;            
+    image-rendering: -moz-crisp-edges !important;          
+    image-rendering: -webkit-optimize-contrast !important; 
+    image-rendering: -o-crisp-edges !important;            
+    image-rendering: pixelated !important;                
+    -ms-interpolation-mode: nearest-neighbor !important;   
 }
 
 
@@ -96,18 +96,18 @@ body {
 }
 
 .smashable-fruit-pc {
-    background-color: #3333dd;
+    background-image: url('../images/fruit-pc.png');
 }
 
 .smashable-old-pc {
-    background-color: #000;
+    background-image: url('../images/old-pc.png');
 }
 
 .smashable-matt-forte {
-    background-color: #213532;
+    background-image: url('../images/matt-forte.png');
 }
 
 .smashable-andrew-luck {
-    background-color: #a84762;
+    background-image: url('../images/andrew-luck.png');
 }
 

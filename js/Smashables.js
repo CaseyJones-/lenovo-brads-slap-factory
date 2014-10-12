@@ -91,7 +91,7 @@ define(function(require, exports, module) {
                 //Initialize the StateModifiers
                 this.types[key].modifierPool[j] = new StateModifier({
                   origin: [1, 0],
-                  transform: Transform.translate(this.types[key].size[0], 340, 0)
+                  transform: Transform.translate((this.types[key].size[0] + gameObjects.smashablesLocation[0]), (gameObjects.conveyorLocation[1] - 25), 0)
                 });
 
                 this.types[key].surfacesAvailable.push(j);

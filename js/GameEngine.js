@@ -19,7 +19,13 @@ define(function(require, exports, module) {
     	this._gameObjects = gameObjects;
     	this.smashables = gameObjects.smashables;
     	
-    	this.conveyorDistance = 850;
+    	if(this._gameObjects.smashablesLocation[0] == 1) {
+    		this.conveyorDistance = (880 - this._gameObjects.conveyorLocation[0] + 50);
+    	}
+    	else {
+    		this.conveyorDistance = 850;
+    	}
+    	
 
     	this.score = 0;
     	this.engineLoopFrequency = 200;
@@ -147,7 +153,7 @@ define(function(require, exports, module) {
 
 	    	//Send the smashable down the conveyor, 
 	    	this.smashables.types[type].modifierPool[index].setTransform(
-				Transform.translate((this.conveyorDistance * -1), 330, 0),
+				Transform.translate((this.conveyorDistance * -1), (this._gameObjects.conveyorLocation[1] - 30), 0),
 			 	{ duration : duration },
 			 	function() {
 
@@ -165,7 +171,7 @@ define(function(require, exports, module) {
 			);
 
 			this.smashables.types[type].modifierPool[index].setTransform(
-				Transform.translate(((130 + this.conveyorDistance) * -1), 500, 0),
+				Transform.translate(((130 + this.conveyorDistance) * -1), (this._gameObjects.conveyorLocation[1] + 300), 0),
 				{ duration : 100, curve: Easing.inOutSine },
 				function() {
 					this.smashables.types[type].surfacePool[index].setProperties(
@@ -179,9 +185,11 @@ define(function(require, exports, module) {
 				Transform.rotateZ(0),
 				{ duration : 0 }
 			);
+
+			var smashableXOrig = (this.smashables.types[type].size[0] + this._gameObjects.smashablesLocation[0]);
 			
 			this.smashables.types[type].modifierPool[index].setTransform(
-				Transform.translate(this.smashables.types[type].size[0], 340, 0),
+				Transform.translate(smashableXOrig, (this._gameObjects.conveyorLocation[1] - 25), 0),
 				{ duration : 1 },
 				function() {
 					this.smashables.types[type].surfacePool[index].setProperties(
@@ -198,14 +206,15 @@ define(function(require, exports, module) {
   	function _slap() {
 
   		this._gameObjects.bradsTabletModifier.setTransform(
-				Transform.translate(-550, 260, 0),
-			 	{ duration : 25 }
+				Transform.translate(this._gameObjects.bradsLocation[0], (this._gameObjects.bradsLocation[1] + this._gameObjects.bradsTabletYOffset + 35), 0),
+			 	{ duration : 25 },
+			 	function() {
+			 		_detectHit.call(this);
+			 	}.bind(this)
 		);
 
-		_detectHit.call(this);
-
 		this._gameObjects.bradsTabletModifier.setTransform(
-				Transform.translate(-550, 215, 0),
+				Transform.translate(this._gameObjects.bradsLocation[0], (this._gameObjects.bradsLocation[1] + this._gameObjects.bradsTabletYOffset), 0),
 			 	{ duration : 25 }
 		);
 
@@ -229,6 +238,8 @@ define(function(require, exports, module) {
 	    		var position = this.smashables.getPositionFromElapsed(smashableInfo.type,
 	    												   			  timeElasped,
 	    												   			  this.conveyorDistance);
+
+	    		console.log(position);
 	    		
 	    		//Test for three cases: 1. Is the trailing edge of the object in the window?
 	    		//						2. Is the leading edge of the object in the window?

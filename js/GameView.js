@@ -24,13 +24,14 @@ define(function(require, exports, module) {
         HeaderFooterLayout.apply(this, arguments);
 
         this.gameObjects = new Object();
-        this.gameObjects.smashables = new Smashables();
-
-        this.gameEngine = new GameEngine(this.gameObjects);
 
         this.options.headerSize = 60;
 
         this.contentWindowSize = _getContentWindowSize.call(this);
+        _calcLocations.call(this);
+
+        this.gameObjects.smashables = new Smashables(this.gameObjects);
+        this.gameEngine = new GameEngine(this.gameObjects);
 
         _createHeader.call(this);
         _createGameWorld.call(this);
@@ -80,6 +81,42 @@ define(function(require, exports, module) {
 
     /*--- PRIVATE METHODS ---*/
 
+    function _calcLocations() {
+
+        var conveyorLocation = new Array(),
+            bradsLocation = new Array(),
+            smashablesLocation = new Array();
+
+
+        //If the window isn't wide enough, scoot the conveyor to the right
+        if(this.contentWindowSize[0] < 880) {
+          conveyorLocation[0] = 880 - this.contentWindowSize[0];
+
+          smashablesLocation[0] = 1;  //Set this to 1 to denote the shift
+        }
+        else {  //Otherwise start at zero
+          smashablesLocation[0] = 0;
+          conveyorLocation[0] = 0;
+        }
+
+        //Calculate conveyor Y placement based on screen size
+        conveyorLocation[1] = this.contentWindowSize[1] * 0.5;
+
+        //Calculate Brad's location
+        bradsLocation[1] = conveyorLocation[1] - 250;
+        bradsLocation[0] = Math.round((880 - conveyorLocation[0]) * 0.666) * -1; 
+
+        //The tablet Y offset is static
+        this.gameObjects.bradsTabletYOffset = 115;
+
+        //Copy to object vars
+        this.gameObjects.conveyorLocation = conveyorLocation;
+        this.gameObjects.bradsLocation = bradsLocation;
+        this.gameObjects.smashablesLocation = smashablesLocation;
+
+        console.log(this.gameObjects);
+    }
+
 
     function _createHeader() {
 
@@ -89,7 +126,7 @@ define(function(require, exports, module) {
         })
 
         this.header.gameTitle = new Surface({
-          content: "Brad's Slapapalooza",
+          content: "Brad's Slap Factory",
           size: [true, true],
           classes: ["header"]
         });
@@ -105,7 +142,7 @@ define(function(require, exports, module) {
         this.gameObjects.score = this.header.score;
 
         this.header.gameTitleModifier = new Modifier({
-          origin: [0.5, 0.4]
+          origin: [0.05, 0.4]
         });
 
         this.header.scoreModifier = new Modifier({
@@ -140,8 +177,11 @@ define(function(require, exports, module) {
         });
 
         this.gameObjects.conveyorModifier = new Modifier({
-          origin: [1, 0.8]
+          origin: [1, 0],
+          transform : Transform.translate(this.gameObjects.conveyorLocation[0], this.gameObjects.conveyorLocation[1], 0)
         });
+
+
 
         this.content.add(this.content.wall);
         this.content.add(this.content.floorModifier).add(this.content.floor);
@@ -162,13 +202,10 @@ define(function(require, exports, module) {
 
     function _addBrad() {
 
-      var bradsLocation = new Array(-550, 110);
-      var bradsTabletYOffset = 115;
+      var bradsLocation = this.gameObjects.bradsLocation,
+          bradsTabletYOffset = this.gameObjects.bradsTabletYOffset;
 
       this.gameObjects.bradsLocation = bradsLocation;
-
-      //How much farther the Tablet is offset on the Y axis from brad
-      this.gameObjects.bradsTabletYOffset = bradsTabletYOffset;
 
       this.gameObjects.bradModifier = new Modifier({
         origin: [1, 0],

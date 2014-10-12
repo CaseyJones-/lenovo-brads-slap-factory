@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+    var Engine = require('famous/core/Engine');
     var View = require('famous/core/View');
     var Surface = require('famous/core/Surface');
     var Transform = require('famous/core/Transform');
@@ -39,6 +40,11 @@ define(function(require, exports, module) {
         _addGameoverScreen.call(this);
         _addSmashables.call(this);
         _addBrad.call(this);
+
+        //Reload the entire app if the page is resized
+        Engine.on('resize',function(){
+          location.reload();
+        });
 
         
         //Remove start screen and start the game when
@@ -249,7 +255,8 @@ define(function(require, exports, module) {
         transform : Transform.translate(xDiff, yDiff, 0)
       });
 
-      var content = 'Slap all the old PCs and Macs by clicking or tapping.';
+      var content = 'BRAD\'S SLAP FACTORY<br /><br />';
+          content += 'Slap all the old PCs and Macs by clicking or tapping.';
           content += '<br /> <br /> CLICK OR TAP TO START THE GAME!';
 
       this.gameObjects.startScreen = new Surface({

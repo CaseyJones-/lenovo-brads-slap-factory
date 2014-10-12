@@ -10,6 +10,8 @@
 
 html {
 	font-family: 'EightBitRegular';
+    min-width: 640px;
+    min-height: 480px;
 }
 
 body {
